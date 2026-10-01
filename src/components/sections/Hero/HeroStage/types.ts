@@ -4,7 +4,7 @@ import type { DroneModel } from "@/types/models";
 type HeroStageProps = {
   model: DroneModel;
   hasImage: boolean;
-  shouldPreload: boolean;
+  shouldPrioritize: boolean;
   shouldReduceMotion: boolean;
   parallaxX: MotionValue<number>;
   parallaxY: MotionValue<number>;

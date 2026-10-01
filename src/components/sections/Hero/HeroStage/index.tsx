@@ -13,7 +13,7 @@ const leavingState: TargetAndTransition = { opacity: 0, scale: 0.96 };
 const visibleState: TargetAndTransition = { opacity: 1, scale: 1 };
 
 const HeroStage = (props: HeroStageProps): JSX.Element => {
-  const { model, hasImage, shouldPreload, shouldReduceMotion, parallaxX, parallaxY } = props;
+  const { model, hasImage, shouldPrioritize, shouldReduceMotion, parallaxX, parallaxY } = props;
   const initialState: TargetAndTransition = shouldReduceMotion ? fadedState : enteringState;
   const exitState: TargetAndTransition = shouldReduceMotion ? fadedState : leavingState;
 
@@ -34,7 +34,8 @@ const HeroStage = (props: HeroStageProps): JSX.Element => {
               alt=""
               fill
               sizes="(min-width: 768px) 100vw, 160vw"
-              preload={shouldPreload}
+              loading={shouldPrioritize ? "eager" : "lazy"}
+              fetchPriority={shouldPrioritize ? "high" : "auto"}
               className="object-cover"
             />
           ) : (

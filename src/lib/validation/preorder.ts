@@ -8,8 +8,6 @@ const QUANTITY_MIN: number = 1;
 const QUANTITY_MAX: number = 5;
 const COMMENT_MAX: number = 500;
 
-const HONEYPOT_FIELD: string = "website";
-
 const preorderFieldNames: readonly PreorderField[] = [
   "name",
   "email",
@@ -43,7 +41,6 @@ export {
   QUANTITY_MIN,
   QUANTITY_MAX,
   COMMENT_MAX,
-  HONEYPOT_FIELD,
   preorderFieldNames,
   preorderSchema,
 };

@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Faq } from "@/components/sections/Faq";
 import { Features } from "@/components/sections/Features";
@@ -19,6 +20,7 @@ const HomePage = (): JSX.Element => {
         <Preorder />
         <Faq />
       </main>
+      <Footer />
     </>
   );
 };

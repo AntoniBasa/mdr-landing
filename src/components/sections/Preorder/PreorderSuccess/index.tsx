@@ -6,24 +6,9 @@ import { Button } from "@/components/ui/Button";
 import { findModelInList } from "@/data/models";
 import { formatPrice } from "@/data/specs";
 import type { DroneModel } from "@/types/models";
-import type { PreorderDelivery } from "@/types/preorder";
 import type { PreorderSuccessProps } from "./types";
 
 const REFERENCE_LENGTH: number = 12;
-
-const getMissingVariableNames = (delivery: PreorderDelivery): string[] => {
-  const missingVariableNames: string[] = [];
-
-  if (!delivery.database) {
-    missingVariableNames.push("MONGODB_URI");
-  }
-
-  if (!delivery.email) {
-    missingVariableNames.push("RESEND_API_KEY");
-  }
-
-  return missingVariableNames;
-};
 
 const PreorderSuccess = (props: PreorderSuccessProps): JSX.Element => {
   const { receipt, models, onReset } = props;
@@ -31,10 +16,6 @@ const PreorderSuccess = (props: PreorderSuccessProps): JSX.Element => {
   const model: DroneModel = findModelInList(models, receipt.model);
   const firstName: string = receipt.name.split(" ")[0];
   const totalPrice: string = formatPrice(model.specs.priceUsd * receipt.quantity);
-  const missingVariableNames: string[] = getMissingVariableNames(receipt.delivery);
-  const isDevelopment: boolean = process.env.NODE_ENV === "development";
-  const shouldShowDevelopmentNote: boolean = isDevelopment && missingVariableNames.length > 0;
-  const missingVariablesVerb: string = missingVariableNames.length > 1 ? "are" : "is";
 
   useEffect((): void => {
     const heading: HTMLHeadingElement | null = headingRef.current;
@@ -82,13 +63,6 @@ const PreorderSuccess = (props: PreorderSuccessProps): JSX.Element => {
           <dd className="truncate font-mono text-muted">{receipt.id.slice(0, REFERENCE_LENGTH)}</dd>
         </div>
       </dl>
-
-      {shouldShowDevelopmentNote && (
-        <p className="rounded-card border border-dashed border-subtle px-5 py-3 text-button text-muted">
-          Dev: {missingVariableNames.join(" and ")} {missingVariablesVerb} not set, so this
-          pre-order was only logged to the server console.
-        </p>
-      )}
 
       <Button variant="outline" onClick={onReset}>
         Place another pre-order

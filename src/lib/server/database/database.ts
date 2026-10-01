@@ -7,10 +7,7 @@ const SERVER_SELECTION_TIMEOUT_MILLISECONDS: number = 5000;
 let pendingConnection: Promise<typeof mongoose> | null = null;
 
 const connectToDatabase = async (): Promise<boolean> => {
-  const connectionString: string | undefined = readOptionalEnvironmentVariable(
-    "MONGODB_URI",
-    "records are logged to the console instead of saved",
-  );
+  const connectionString: string | undefined = readOptionalEnvironmentVariable("MONGODB_URI");
 
   if (connectionString === undefined) {
     return false;

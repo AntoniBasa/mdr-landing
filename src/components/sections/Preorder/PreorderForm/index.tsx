@@ -21,12 +21,14 @@ import { CircleAlert, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Field } from "@/components/ui/form/Field";
 import { getDescribedByIds } from "@/components/ui/form/Field/field-ids";
+import { HoneypotField } from "@/components/ui/form/HoneypotField";
 import { Input } from "@/components/ui/form/Input";
 import { Select } from "@/components/ui/form/Select";
 import { Stepper } from "@/components/ui/form/Stepper";
 import { Textarea } from "@/components/ui/form/Textarea";
 import { findModelInList, isModelId } from "@/data/models";
 import { formatPrice } from "@/data/specs";
+import { HONEYPOT_FIELD, readHoneypotValue } from "@/lib/honeypot/honeypot";
 import {
   getPreorderModel,
   getServerPreorderModel,
@@ -35,7 +37,6 @@ import {
 } from "@/lib/preorder-selection/preorder-selection";
 import {
   COMMENT_MAX,
-  HONEYPOT_FIELD,
   preorderFieldNames,
   preorderSchema,
   QUANTITY_MAX,
@@ -58,20 +59,6 @@ const swapTransition: Transition = { duration: 0.35, ease: [0.22, 1, 0.36, 1] };
 
 const createDefaultValues = (modelId: ModelId): PreorderInput => {
   return { name: "", email: "", model: modelId, quantity: 1, comment: "" };
-};
-
-const readHoneypotValue = (event?: BaseSyntheticEvent): string => {
-  if (event === undefined || !(event.target instanceof HTMLFormElement)) {
-    return "";
-  }
-
-  const honeypotValue: FormDataEntryValue | null = new FormData(event.target).get(HONEYPOT_FIELD);
-
-  if (typeof honeypotValue !== "string") {
-    return "";
-  }
-
-  return honeypotValue;
 };
 
 const readPreorderResponse = async (response: Response): Promise<PreorderResponse | null> => {
@@ -178,7 +165,7 @@ const PreorderForm = (props: PreorderFormProps): JSX.Element => {
       return;
     }
 
-    setReceipt({ ...preorder, id: result.id, delivery: result.delivery });
+    setReceipt({ ...preorder, id: result.id });
   };
 
   const handleModelChange = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -316,16 +303,7 @@ const PreorderForm = (props: PreorderFormProps): JSX.Element => {
             />
           </Field>
 
-          <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-            <label htmlFor={honeypotFieldId}>Website</label>
-            <input
-              id={honeypotFieldId}
-              name={HONEYPOT_FIELD}
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
+          <HoneypotField id={honeypotFieldId} />
 
           <dl className="mt-1 flex flex-col gap-2 border-t border-glass pt-5 text-button">
             <div className="flex justify-between gap-4 text-muted">

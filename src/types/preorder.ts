@@ -8,15 +8,9 @@ type PreorderField = keyof PreorderInput;
 
 type PreorderFieldErrors = Partial<Record<PreorderField, string>>;
 
-type PreorderDelivery = {
-  database: boolean;
-  email: boolean;
-};
-
 type PreorderSuccessResponse = {
   ok: true;
   id: string;
-  delivery: PreorderDelivery;
 };
 
 type PreorderFailureResponse = {
@@ -39,7 +33,6 @@ export type {
   PreorderInput,
   PreorderField,
   PreorderFieldErrors,
-  PreorderDelivery,
   PreorderSuccessResponse,
   PreorderFailureResponse,
   PreorderResponse,

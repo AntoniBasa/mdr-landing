@@ -2,4 +2,6 @@ type SubscriberRecord = {
   email: string;
 };
 
-export type { SubscriberRecord };
+type SubscriberSaveResult = "saved" | "duplicate" | "not-configured";
+
+export type { SubscriberRecord, SubscriberSaveResult };

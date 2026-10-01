@@ -1,12 +1,13 @@
 import { randomUUID } from "node:crypto";
 import { after } from "next/server";
 import * as zod from "zod";
-import { isEmailConfigured, sendPreorderConfirmation } from "@/lib/server/email/email";
+import { isHoneypotFilled } from "@/lib/honeypot/honeypot";
+import { sendPreorderConfirmation } from "@/lib/server/email/email";
 import { savePreorderRecord } from "@/lib/server/preorder-records/preorder-records";
 import type { PreorderRecord } from "@/lib/server/preorder-records/types";
 import { createRateLimiter, getClientIpAddress } from "@/lib/server/rate-limit/rate-limit";
 import type { RateLimitChecker, RateLimitResult } from "@/lib/server/rate-limit/types";
-import { HONEYPOT_FIELD, preorderFieldNames, preorderSchema } from "@/lib/validation/preorder";
+import { preorderFieldNames, preorderSchema } from "@/lib/validation/preorder";
 import type {
   PreorderConfirmation,
   PreorderFieldErrors,
@@ -24,22 +25,6 @@ const checkRateLimit: RateLimitChecker = createRateLimiter({
 
 const createJsonResponse = (body: PreorderResponse, init?: ResponseInit): Response => {
   return Response.json(body, init);
-};
-
-const isHoneypotFilled = (body: unknown): boolean => {
-  if (typeof body !== "object" || body === null) {
-    return false;
-  }
-
-  const bodyEntries: [string, unknown][] = Object.entries(body);
-
-  for (const [fieldName, fieldValue] of bodyEntries) {
-    if (fieldName === HONEYPOT_FIELD && Boolean(fieldValue)) {
-      return true;
-    }
-  }
-
-  return false;
 };
 
 const collectFieldErrors = (validationError: zod.ZodError<PreorderInput>): PreorderFieldErrors => {
@@ -92,11 +77,7 @@ const POST = async (request: Request): Promise<Response> => {
   }
 
   if (isHoneypotFilled(body)) {
-    return createJsonResponse({
-      ok: true,
-      id: randomUUID(),
-      delivery: { database: false, email: false },
-    });
+    return createJsonResponse({ ok: true, id: randomUUID() });
   }
 
   const validationResult = preorderSchema.safeParse(body);
@@ -126,7 +107,6 @@ const POST = async (request: Request): Promise<Response> => {
     );
   }
 
-  const isDatabaseEnabled: boolean = savedPreorderId !== null;
   let preorderId: string = randomUUID();
 
   if (savedPreorderId === null) {
@@ -142,18 +122,10 @@ const POST = async (request: Request): Promise<Response> => {
     model: preorderRecord.model,
     quantity: preorderRecord.quantity,
   };
-  const isEmailEnabled: boolean = isEmailConfigured();
 
   after((): Promise<void> => sendPreorderConfirmation(preorderConfirmation));
 
-  return createJsonResponse(
-    {
-      ok: true,
-      id: preorderId,
-      delivery: { database: isDatabaseEnabled, email: isEmailEnabled },
-    },
-    { status: 201 },
-  );
+  return createJsonResponse({ ok: true, id: preorderId }, { status: 201 });
 };
 
 export { POST };

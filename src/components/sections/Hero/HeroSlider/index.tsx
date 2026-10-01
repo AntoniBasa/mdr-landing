@@ -194,7 +194,7 @@ const HeroSlider = (props: HeroSliderProps): JSX.Element => {
       <HeroStage
         model={activeModel}
         hasImage={imageAvailability[activeModel.id]}
-        shouldPreload={activeIndex === initialIndex}
+        shouldPrioritize={activeIndex === initialIndex}
         shouldReduceMotion={shouldReduceMotion}
         parallaxX={parallaxX}
         parallaxY={parallaxY}

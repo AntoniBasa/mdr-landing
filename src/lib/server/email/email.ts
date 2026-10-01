@@ -9,12 +9,6 @@ import type { ConfirmationEmailContent } from "./types";
 
 const DEFAULT_SENDER: string = "MDR <onboarding@resend.dev>";
 const API_KEY_VARIABLE: string = "RESEND_API_KEY";
-const MISSING_API_KEY_FALLBACK: string =
-  "confirmation emails are logged to the console instead of sent";
-
-const readApiKey = (): string | undefined => {
-  return readOptionalEnvironmentVariable(API_KEY_VARIABLE, MISSING_API_KEY_FALLBACK);
-};
 
 const getSenderAddress = (): string => {
   const configuredSender: string | undefined = process.env.RESEND_FROM;
@@ -61,13 +55,9 @@ const buildConfirmationEmail = (order: PreorderConfirmation): ConfirmationEmailC
   return { subject, text, html };
 };
 
-const isEmailConfigured = (): boolean => {
-  return readApiKey() !== undefined;
-};
-
 const sendPreorderConfirmation = async (order: PreorderConfirmation): Promise<void> => {
   const emailContent: ConfirmationEmailContent = buildConfirmationEmail(order);
-  const apiKey: string | undefined = readApiKey();
+  const apiKey: string | undefined = readOptionalEnvironmentVariable(API_KEY_VARIABLE);
 
   if (apiKey === undefined) {
     console.info("[mdr] Confirmation email (not sent):", {
@@ -92,4 +82,4 @@ const sendPreorderConfirmation = async (order: PreorderConfirmation): Promise<vo
   }
 };
 
-export { isEmailConfigured, sendPreorderConfirmation };
+export { sendPreorderConfirmation };

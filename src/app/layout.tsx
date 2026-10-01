@@ -1,24 +1,46 @@
 import type { JSX } from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { MotionProvider } from "@/components/providers/MotionProvider";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from "@/data/site";
+import { getSiteUrl } from "@/lib/server/site-url/site-url";
 import "./globals.css";
 
 const velaSans = localFont({
   src: [
-    { path: "../fonts/VelaSans-Light.ttf", weight: "300", style: "normal" },
-    { path: "../fonts/VelaSans-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../fonts/VelaSans-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../fonts/VelaSans-ExtraBold.ttf", weight: "800", style: "normal" },
+    { path: "../fonts/VelaSans-Light.woff2", weight: "300", style: "normal" },
+    { path: "../fonts/VelaSans-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/VelaSans-Medium.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/VelaSans-ExtraBold.woff2", weight: "800", style: "normal" },
   ],
   variable: "--font-vela",
   display: "swap",
 });
 
 const metadata: Metadata = {
-  title: "MDR - Premium drones",
-  description:
-    "MDR builds premium drones for creators: Heavy, Ultra Light and Superfast. Pre-order yours today.",
+  metadataBase: getSiteUrl(),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
+};
+
+const viewport: Viewport = {
+  themeColor: "#000000",
+  colorScheme: "dark",
 };
 
 const RootLayout = (props: LayoutProps<"/">): JSX.Element => {
@@ -33,4 +55,4 @@ const RootLayout = (props: LayoutProps<"/">): JSX.Element => {
   );
 };
 
-export { metadata, RootLayout as default };
+export { metadata, viewport, RootLayout as default };

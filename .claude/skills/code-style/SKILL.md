@@ -136,7 +136,7 @@ ui/
   capital letter.
 - Never create folders named `utils2`, `misc`, `common`, `helpers`, `tmp`,
   `stuff`, or abbreviations such as `cmp`, `hk`, `svc`.
-- Folder names fixed by Next.js or by the project spec in `CLAUDE.md` stay as
+- Folder names fixed by Next.js or by the structure in `CLAUDE.md` stay as
   they are (`app`, `api`, `components/ui`, `lib`, `data`).
 - Non-component files are kebab-case and named after their content
   (`rate-limit.ts`, `preorder-selection.ts`).
