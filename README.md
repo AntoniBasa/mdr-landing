@@ -1,5 +1,8 @@
 # MDR — premium drone landing page
 
+Preview:
+https://mdr-landing-nine.vercel.app/
+
 A production-style landing page for a fictional drone brand, built as a
 portfolio project. It covers the whole path of a pre-order: a Figma-based hero,
 a model comparison fed by an API route, and a validated form that writes to
