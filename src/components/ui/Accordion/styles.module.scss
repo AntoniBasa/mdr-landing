@@ -1,0 +1,24 @@
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition-property: grid-template-rows, visibility;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+  visibility: visible;
+}
+
+.panelContent {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    transition-duration: 0s;
+  }
+}

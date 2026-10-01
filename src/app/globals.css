@@ -2,12 +2,7 @@
 
 @source not "../../.claude";
 
-/*
- * Design tokens extracted from the Figma hero (MDR ultra / "drone" frame).
- * Tailwind v4 reads tokens from @theme instead of tailwind.config.
- */
 @theme static {
-  /* Colors */
   --color-bg: #000000;
   --color-fg: #ffffff;
   --color-muted: rgb(255 255 255 / 0.5);
@@ -17,35 +12,31 @@
   --color-accent-hover: #3a5bf0;
   --color-control: #d9d9d9;
 
-  /* Typography */
   --font-sans: var(--font-vela), ui-sans-serif, system-ui, sans-serif;
-  --text-display: 4rem; /* 64px hero title */
+  --text-display: 4rem;
   --text-display--line-height: 1.36;
-  --text-lead: 1.25rem; /* 20px subtitle / logo */
+  --text-lead: 1.25rem;
   --text-lead--line-height: 1.35;
-  --text-nav: 1rem; /* 16px nav & model list */
+  --text-nav: 1rem;
   --text-nav--line-height: 1.375;
-  --text-button: 0.875rem; /* 14px buttons */
+  --text-button: 0.875rem;
   --text-button--line-height: 1.36;
-  --text-title: 3rem; /* 48px section headings */
+  --text-title: 3rem;
   --text-title--line-height: 1.15;
-  --text-stat: 3.5rem; /* 56px feature numbers */
+  --text-stat: 3.5rem;
   --text-stat--line-height: 1;
-  --tracking-logo: -0.09em; /* -1.8px at 20px */
-  --tracking-eyebrow: 0.2em; /* uppercase section labels */
+  --tracking-logo: -0.09em;
+  --tracking-eyebrow: 0.2em;
 
-  /* Radii */
   --radius-thumb: 6px;
   --radius-pill: 9999px;
   --radius-card: 1.5rem;
 
-  /* Spacing */
-  --spacing-gutter: 2.5rem; /* 40px page gutter on desktop */
-  --spacing-control: 3.875rem; /* 62px round slider controls */
-  --spacing-thumb: 4.9375rem; /* 79px gallery thumbnails */
+  --spacing-gutter: 2.5rem;
+  --spacing-control: 3.875rem;
+  --spacing-thumb: 4.9375rem;
 
-  /* Layout */
-  --container-page: 75rem; /* 1200px content container */
+  --container-page: 75rem;
 }
 
 html {

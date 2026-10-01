@@ -1,0 +1,26 @@
+@use "landscape-stage" as *;
+
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 150cqw;
+  aspect-ratio: 16 / 10;
+  translate: -50% -50%;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 72%, transparent 100%);
+
+  @include landscape-stage {
+    top: 50%;
+    width: max(100cqw, 160cqh);
+    mask-image: none;
+  }
+}
+
+.ellipse {
+  position: absolute;
+  left: calc(188 / 1440 * 100%);
+  top: calc(509 / 900 * 100%);
+  width: calc(1014 / 1440 * 100%);
+  height: auto;
+  pointer-events: none;
+}

@@ -1,0 +1,5 @@
+@mixin landscape-stage {
+  @container (min-aspect-ratio: 1/1) and (min-width: 48rem) {
+    @content;
+  }
+}
