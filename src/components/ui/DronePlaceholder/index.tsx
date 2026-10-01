@@ -23,9 +23,6 @@ const DronePlaceholder = (props: DronePlaceholderProps): JSX.Element => {
       >
         {model.titleAccent}
       </span>
-      <span className="mt-3 px-4 text-center text-button text-subtle">
-        Drop your image at /public{model.image}
-      </span>
     </div>
   );
 };
